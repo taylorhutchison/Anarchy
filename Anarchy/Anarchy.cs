@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Anarchy
 {
@@ -74,11 +75,16 @@ namespace Anarchy
         }
         public async Task InvokeAsync(HttpContext context)
         {
-            if (_config.Enabled() && RouteMatches(context.Request.Path.Value) && Intercept(_config.Entropy))
+            if (_config.Enabled())
             {
-                var firstMatchingRoute = _config.Routes.First(r => r.Route.Contains(context.Request.Path.Value));
-                context.Response.StatusCode = firstMatchingRoute.StatusCode;
-                await context.Response.WriteAsync(firstMatchingRoute.Response);
+                var firstMatchingRoute = MatchingRoute(context.Request.Path.Value);
+                if(firstMatchingRoute != null && Intercept(_config.Entropy)) {
+                    context.Response.StatusCode = firstMatchingRoute.StatusCode;
+                    await context.Response.WriteAsync(firstMatchingRoute.Response);
+                }
+                else {
+                    await _next(context);
+                }
             }
             else 
             {
@@ -89,6 +95,13 @@ namespace Anarchy
         private bool RouteMatches(string route) {
             Console.WriteLine(route);
             return _config.Routes.Select(r => r.Route).Any(r => r.Contains(route));
+        }
+
+        private AnarchyRoute MatchingRoute(string route) {
+            if(_config.Routes != null && _config.Routes.Any()) {
+                return _config.Routes.FirstOrDefault(r => route.Contains(r.Route));
+            }
+            return null;
         }
 
         private bool Intercept(Entropy entropy)

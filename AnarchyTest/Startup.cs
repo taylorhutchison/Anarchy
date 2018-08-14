@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Anarchy;
 
 namespace Anarchy
 {
@@ -31,15 +32,14 @@ namespace Anarchy
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseAnarchy(configure => {
 
                 configure.Entropy = Entropy.VortexOfChaos;
 
                 configure.Enabled = () => Configuration.GetValue<bool>("Anarchy");
 
-                configure.Route("/api/values", "Something went wrong!", 503);
-
+                configure.Route("api/v", "Something went wrong!", 503);
+                
             });
 
             app.UseMvcWithDefaultRoute();
