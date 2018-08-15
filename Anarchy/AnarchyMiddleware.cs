@@ -10,8 +10,14 @@ using System.Text.RegularExpressions;
 
 namespace Anarchy
 {
+    ///<summary>
+    ///Extension class for Anarchy.
+    ///</summary>
     public static class AnarchyMiddlewareExtensions
     {
+        ///<summary>
+        ///Extension method to add the AnarchyMiddleware to the IApplicationBuilder interface.
+        ///</summary>
         public static IApplicationBuilder UseAnarchy(
             this IApplicationBuilder builder, Action<AnarchyConfig> configure)
         {
@@ -21,58 +27,28 @@ namespace Anarchy
         }
     }
 
-    public class AnarchyRoute {
-        public string Route {get; set;}
-        public string Response {get; set;}
-        public int StatusCode { get; set; }
-    }
-
-    public class AnarchyConfig
-    {
-        public List<AnarchyRoute> Routes {get; private set;}
-        public Entropy Entropy { get; set; }
-        public Func<bool> Enabled { get; set; }
-        public void Route(Action<AnarchyRoute> configure) {
-            var route = new AnarchyRoute();
-            configure(route);
-            Routes.Add(route);
-        }
-
-        public void Route(string route, string response, int statusCode) {
-            var anarchyRoute = new AnarchyRoute {
-                Route = route,
-                Response = response,
-                StatusCode = statusCode
-            };
-            Routes.Add(anarchyRoute);
-        }
-
-        public AnarchyConfig() {
-            Routes = new List<AnarchyRoute>();
-            Entropy = Entropy.Inconvience;
-            Enabled = () => false;
-        }
-
-    }
-
-    public enum Entropy {
-        Inconvience,
-        Disorder,
-        VortexOfChaos,
-        EndTimes
-    }
-
+    ///<summary>
+    ///Anarchy Middleware for ASP.NET
+    ///</summary>
     public class AnarchyMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly AnarchyConfig _config;
         private Random _rng;
+
+        ///<summary>
+        ///AnarchyMiddle constructor used by Middleware pipeline.
+        ///</summary>
         public AnarchyMiddleware(RequestDelegate next, AnarchyConfig config)
         {
             _next = next;
             _config = config;
             _rng = new Random();
         }
+
+        ///<summary>
+        ///Invoke method used by Middleware pipeline.
+        ///</summary>
         public async Task InvokeAsync(HttpContext context)
         {
             if (_config.Enabled())

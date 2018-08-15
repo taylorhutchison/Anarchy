@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Description>ASP.NET Core Middleware to simulate errors in your application.</Description>
     <Summary>ASP.NET Core Middleware to simulate errors in your application.</Summary>
     <MinClientVersion>4.1.0</MinClientVersion>
@@ -18,7 +19,7 @@
     <PackageId>Anarchy</PackageId>
     <Version>0.0.2-alpha</Version>
   </PropertyGroup>
-  <ItemGroup>
+  <ItemGroup> 
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.0"/>
   </ItemGroup>
 </Project>
