@@ -34,7 +34,7 @@ namespace Anarchy
             }
 
             app.UseAnarchy(configure => {
-                configure.FailPercent= 99;
+                configure.CaptureRate= 99;
                 configure.Enabled = () => Configuration.GetValue<bool>("Anarchy");
                 configure.Route("api/v", "Something went really wrong!", 503);
             });

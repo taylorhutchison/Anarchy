@@ -54,7 +54,7 @@ namespace Anarchy
             if (_config.Enabled())
             {
                 var firstMatchingRoute = MatchingRoute(context.Request.Path.Value);
-                if(firstMatchingRoute != null && Intercept(_config.FailPercent)) {
+                if(firstMatchingRoute != null && Intercept(_config.CaptureRate)) {
                     context.Response.StatusCode = firstMatchingRoute.StatusCode;
                     await context.Response.WriteAsync(firstMatchingRoute.Response);
                 }
