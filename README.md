@@ -4,7 +4,7 @@
 ## Purpose
 When you are building a web application you can make assumptions about the reliability and resilience of your system. We sometimes test our applications in ideal scenarios and forget that failures can occur in components we may or may not control. Anarchy is a development tool that helps you simulate errors so you can see how your application behaves when operating conditions are less than ideal.
 
-#### Warning:
+#### :fire: Warning :fire:
 Anarchy is a tool for development and testing purposes only. It is your responsibility to make sure it is not used in production scenarios. It is literally designed to make your application fail.
 
 ### How to use
