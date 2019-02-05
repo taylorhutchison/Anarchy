@@ -54,7 +54,7 @@ namespace Anarchy
             if (_config.Enabled())
             {
                 var firstMatchingRoute = MatchingRoute(context.Request.Path.Value);
-                if(firstMatchingRoute != null && Intercept(_config.Entropy)) {
+                if(firstMatchingRoute != null && Intercept(_config.FailPercent)) {
                     context.Response.StatusCode = firstMatchingRoute.StatusCode;
                     await context.Response.WriteAsync(firstMatchingRoute.Response);
                 }
@@ -80,22 +80,10 @@ namespace Anarchy
             return null;
         }
 
-        private bool Intercept(Entropy entropy)
+        private bool Intercept(int percent)
         {
             var random = _rng.Next(0, 100);
-            switch(entropy)
-            {
-                case Entropy.Inconvience:
-                    return random > 75;
-                case Entropy.Disorder:
-                    return random > 50;
-                case Entropy.VortexOfChaos:
-                    return random > 25;
-                case Entropy.EndTimes:
-                    return random > 1;
-                default:
-                    return false;
-            }
+            return percent > random;
         }
     }
 }

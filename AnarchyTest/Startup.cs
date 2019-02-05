@@ -32,14 +32,11 @@ namespace Anarchy
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseAnarchy(configure => {
-
-                configure.Entropy = Entropy.VortexOfChaos;
-
+                configure.FailPercent= 99;
                 configure.Enabled = () => Configuration.GetValue<bool>("Anarchy");
-
-                configure.Route("api/v", "Something went wrong!", 503);
-                
+                configure.Route("api/v", "Something went really wrong!", 503);
             });
 
             app.UseMvcWithDefaultRoute();

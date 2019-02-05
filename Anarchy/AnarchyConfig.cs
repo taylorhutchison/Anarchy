@@ -17,7 +17,7 @@ namespace Anarchy {
         ///<summary>
         ///The likelhood that a route will fail or succeed.
         ///</summary>
-        public Entropy Entropy { get; set; }
+        public int FailPercent { get; set; }
 
         ///<summary>
         ///Used to specify a method to check check at run-time if Anarchy should be enabled.false
@@ -54,7 +54,7 @@ namespace Anarchy {
         ///</summary>
         public AnarchyConfig() {
             Routes = new List<AnarchyRoute>();
-            Entropy = Entropy.Inconvience;
+            FailPercent = 25;
             Enabled = () => false;
             MatchAllRoutes = false;
         }
